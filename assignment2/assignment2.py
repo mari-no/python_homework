@@ -21,25 +21,14 @@ def read_employees():
                   
                 else:
                     rows.append(row)
-                    dict["rows"]=rows
+            dict["rows"]=rows
        #~ print("These are the rows of employees", rows)
        # print("This is dictionary", dict)
-
     except Exception as e:
-    
-        trace_back = traceback.extract_tb(e.__traceback__)
-        stack_trace = list()
-        for trace in trace_back:
-            stack_trace.append(f'File : {trace[0]} , Line : {trace[1]}, Func.Name : {trace[2]}, Message : {trace[3]}')
-        print(f"Exception type: {type(e).__name__}")
-        message = str(e)
-        if message:
-            print(f"Exception message: {message}")
-        print(f"Stack trace: {stack_trace}")
         print(f"An exception occurred: {e}")
-
     return dict
 employees=read_employees()
+
 
 #print(employees)
 
@@ -81,14 +70,14 @@ def sort_by_last_name():
    employees["rows"].sort(key=lambda row:row[last_name_index])
    return employees["rows"]
 
-sort_by_last_name()
+
 
     #Task 8: Create a dict for an Employee
 
 def employee_dict(row_list):
    
-    keys=employees["fields"]
-    keys_without_id=keys[1:(len(keys)+1)]
+    
+    keys_without_id=employees["fields"][1:(len(employees["fields"])+1)]
     #print(keys_without_id)
    
     employee_dictionary=dict.fromkeys(keys_without_id, "Unknown")
@@ -107,23 +96,25 @@ employee_dict(['6', 'Tracy', 'Foster', '+237 6225761379'])
     #Task 9: A dict of dicts, for All Employees
 
 def all_employees_dict():
-    employees_records=employees["rows"]
-    ids_list=[]
-    empl_data=[]
+    # employees_records=employees["rows"]
+    # ids_list=[]
+    # empl_data=[]
    
 
-    for row in employees_records:
-        empl_id=row[0]
-        empl_data_row=row
-        ids_list.append(empl_id)
-        empl_data.append(empl_data_row)
-    all_employees_dictionary=dict.fromkeys(ids_list, "Unknown")
-    for j in range (0, len(empl_data)):
-        all_employees_dictionary[ids_list[j]]=employee_dict(empl_data[j])
-    #print(all_employees_dictionary)
-    #print("~Empl_data",empl_data_row)
+    # for row in employees_records:
+    #     empl_id=row[0]
+    #     empl_data_row=row
+    #     ids_list.append(empl_id)
+    #     empl_data.append(empl_data_row)
+    # all_employees_dictionary=dict.fromkeys(ids_list, "Unknown")
+    # for j in range (0, len(empl_data)):
+    #     all_employees_dictionary[ids_list[j]]=employee_dict(empl_data[j])
+    
+    all_employees_dictionary = {}
+    for row in employees["rows"]:
+        all_employees_dictionary[row[0]] = employee_dict(row)
     return all_employees_dictionary
-all_employees_dict()
+
 
     #Task 10: Use the os Module
 
@@ -229,14 +220,14 @@ def create_minutes_list():
     return result
 
 minutes_list=create_minutes_list()
-#print("Here is the list", minutes_list)
+
 
 
 
     #Task 15: Write Out Sorted List
 def write_sorted_list():
     minutes_list.sort(key=lambda x: x[1])
-   # print(" \n \n \n Here's it sorted()", minutes_list)
+ 
     result_list=list(map(lambda x : (x[0], datetime.strftime(x[1], "%B %d, %Y")), minutes_list))
 
     with open('./minutes.csv', 'w', newline='') as minutes:
@@ -246,7 +237,6 @@ def write_sorted_list():
 
     return result_list
 
-write_sorted_list()
 
 
 
