@@ -25,7 +25,21 @@ def read_employees():
        #~ print("These are the rows of employees", rows)
        # print("This is dictionary", dict)
     except Exception as e:
-        print(f"An exception occurred: {e}")
+        trace_back = traceback.extract_tb(e.__traceback__)
+        stack_trace = []
+
+        for trace in trace_back:
+            stack_trace.append(
+                f"File : {trace[0]} , Line : {trace[1]}, Func.Name : {trace[2]}, Message : {trace[3]}"
+            )
+
+        print(f"Exception type: {type(e).__name__}")
+
+        message = str(e)
+        if message:
+            print(f"Exception message: {message}")
+
+        print(f"Stack trace: {stack_trace}")
     return dict
 employees=read_employees()
 
@@ -77,20 +91,18 @@ def sort_by_last_name():
 def employee_dict(row_list):
    
     
-    keys_without_id=employees["fields"][1:(len(employees["fields"])+1)]
-    #print(keys_without_id)
+    keys_without_id=employees["fields"][1:]
+   
    
     employee_dictionary=dict.fromkeys(keys_without_id, "Unknown")
-    #print(employee_dictionary)
-    row_list=row_list[1:(len(row_list)+1)]
-   # print("Row_list is ",row_list)
+  
+    row_list=row_list[1:]
+ 
     for j in range(0, len(keys_without_id)):
         employee_dictionary[keys_without_id[j]]=row_list[j]
-   # print(employee_dictionary)
+ 
     return employee_dictionary
 
-
-employee_dict(['6', 'Tracy', 'Foster', '+237 6225761379'])
 
 
     #Task 9: A dict of dicts, for All Employees

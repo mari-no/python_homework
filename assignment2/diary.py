@@ -1,23 +1,33 @@
     ##Task 1
+import traceback
 
 try:
-    with open('diary.txt', 'a') as diary:
+    with open("diary.txt", "a") as diary:
         first = True
-        record=""
-        while  record != "done for now":
-            if first==True:
+
+        while True:
+            if first:
                 record = input("What happened today? ")
-                first=False
-                record = input("What else? ")
-                diary.write(record+"\n")
+                first = False
             else:
-                diary.write(record+"\n")
+                record = input("What else? ")
+
+            diary.write(record + "\n")
+
+            if record == "done for now":
                 break
 
+except Exception as e:
+    trace_back = traceback.extract_tb(e.__traceback__)
+    stack_trace = []
 
-        
+    for trace in trace_back:
+        stack_trace.append(
+            f"File : {trace[0]} , Line : {trace[1]}, Func.Name : {trace[2]}, Message : {trace[3]}"
+        )
 
-
-
-except Exception as e
-    print(f"An exception occurred: {e}")
+    print(f"Exception type: {type(e).__name__}")
+    message = str(e)
+    if message:
+        print(f"Exception message: {message}")
+    print(f"Stack trace: {stack_trace}")
