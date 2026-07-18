@@ -4,19 +4,19 @@ import traceback
 
 try:
     with open("diary.txt", "a") as diary:
-        record=""
-        while True:
-            if first:
-                record = input("What happened today? ")
+      first = True
+      while True:
+          if first:
+            record = input("What happened today? ")
+            first = False
+          else:
+            record = input("What else? ")
 
-                first = False
-            else:
-                record = input("What else? ")
-            diary.write(record + "\n")
+          diary.write(record + "\n")
 
-            if record == "done for now":
-                break
-
+        
+          if record == "done for now":
+            break
 
 except Exception as e:
    
