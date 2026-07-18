@@ -22,8 +22,7 @@ def read_employees():
                 else:
                     rows.append(row)
             dict["rows"]=rows
-       #~ print("These are the rows of employees", rows)
-       # print("This is dictionary", dict)
+      
 
     except Exception as e:
     
@@ -41,7 +40,7 @@ def read_employees():
     return dict
 employees=read_employees()
 
-#print(employees)
+
 
     #Task 3: Find the Column Index
 def column_index(param):
@@ -94,7 +93,7 @@ def employee_dict(row_list):
     employee_dictionary=dict.fromkeys(keys_without_id, "Unknown")
 
     row_list=row_list[1:]
-   # print("Row_list is ",row_list)
+  
     for j in range(0, len(keys_without_id)):
         employee_dictionary[keys_without_id[j]]=row_list[j]
   
@@ -137,7 +136,7 @@ def set_that_secret(new_secr):
 
 
 set_that_secret("I love Python")
-print(custom_module.secret)
+
 
 
     #Task 12: Read minutes1.csv and minutes2.csv
