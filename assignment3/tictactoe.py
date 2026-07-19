@@ -6,8 +6,10 @@ class TictactoeException(Exception):
         super().__init__(message)
 
 class Board:
+    
     valid_moves = ["upper left", "upper center", "upper right", "middle left", "center", "middle right", "lower left", "lower center", "lower right"]
     def __init__(self):
+        self.last_move = None
         self.board_array=[[" " for column in range(3)]for row in range(3)]
         self.turn = "X"
     def __str__(self):
@@ -21,7 +23,7 @@ class Board:
     
 
     def move(self, move_string):
-        self.last_move = None
+        
         if move_string not in Board.valid_moves:
             raise TictactoeException("That's not a valid move.")
         move_index = Board.valid_moves.index(move_string)
@@ -74,14 +76,14 @@ class Board:
 
         if not win:
             if self.turn == "X": 
-                return (False, "X's turn.")
+                return (False, "X's turn")
             else:
-                return (False, "O's turn.")
+                return (False, "O's turn")
         else:
             if self.turn == "O":
-                return (True, "X has won!")
+                return (True, "X has won")
             else:
-                return (True, "O has won!")
+                return (True, "O has won")
 
         
 #

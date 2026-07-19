@@ -40,4 +40,6 @@ def create_fullname_with_e_only():
     fullname_list_e_only =[ name for name in fullname_list if "e" in name]
     return fullname_list_e_only
 
+
+print(create_fullname_list())
 print(create_fullname_with_e_only())
