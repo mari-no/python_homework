@@ -21,7 +21,7 @@ class Point:
 
 class Vector(Point):
     def __init__(self, x, y):
-        super().__init__(x,y)
+        pass
     def __str__(self):
         return f"[{self.x}:{self.y}]"
     def __add__(self, other):

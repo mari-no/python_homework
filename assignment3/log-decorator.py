@@ -13,17 +13,17 @@ def logger_decorator(func):
         
     
         # To write a log record:
-        logger.log(logging.INFO, f"function:{func.__name__}")
+        logger.log(logging.INFO, f"function: {func.__name__}")
 
         if (args):
-            logger.log(logging.INFO, f"positional parameters:{list(args)}")
+            logger.log(logging.INFO, f"positional parameters: {list(args)}")
         else:
-            logger.log(logging.INFO, f"positional parameters:none")
+            logger.log(logging.INFO, f"positional parameters: none")
 
         if(kwargs):
-            logger.log(logging.INFO, f"keyword parameters:{dict(kwargs)}")
+            logger.log(logging.INFO, f"keyword parameters: {dict(kwargs)}")
         else:
-            logger.log(logging.INFO, f"keyword parameters:none")
+            logger.log(logging.INFO, f"keyword parameters: none")
 
         logger.log(logging.INFO, f"return: {result}")
 
@@ -44,7 +44,7 @@ def positional_args(*args):
 positional_args(12, 3, 778, 99) 
 
 @logger_decorator
-def keyw_args(**kwargs)):
+def keyw_args(**kwargs):
     return logger_decorator
 
 keyw_args(key1= 122, key2=3444, key3 = 555)

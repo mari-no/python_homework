@@ -2,16 +2,13 @@ import csv
 import traceback
 list_of_lists=[]
 
-fullname_list_e_only=[]
 def read_to_list():
     list_of_lists.clear()
     
     try:  
         with open("../csv/employees.csv", "r") as empl:
             reader=csv.reader(empl)
-            for row in reader:
-                list_of_lists.append(row)
-
+            list_of_lists = [row for row in reader]
     except Exception as e:
     
         trace_back = traceback.extract_tb(e.__traceback__)
