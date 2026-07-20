@@ -1,14 +1,15 @@
 import csv
 import traceback
-list_of_lists=[]
+
 
 def read_to_list():
-    list_of_lists.clear()
+    
     
     try:  
         with open("../csv/employees.csv", "r") as empl:
             reader=csv.reader(empl)
-            list_of_lists = [row for row in reader]
+            
+            return [row for row in reader]
     except Exception as e:
     
         trace_back = traceback.extract_tb(e.__traceback__)
@@ -23,17 +24,16 @@ def read_to_list():
         print(f"An exception occurred: {e}")
    
     
-    return list_of_lists
+list_of_lists=read_to_list()  
 
 def create_fullname_list():
-    read_to_list()
     fullname_list = [row[1]+" "+row[2] for row in list_of_lists[1:]]
     return fullname_list
 
 
-
+fullname_list = create_fullname_list()
 def create_fullname_with_e_only():
-    fullname_list = create_fullname_list()
+    
     fullname_list_e_only =[ name for name in fullname_list if "e" in name]
     return fullname_list_e_only
 

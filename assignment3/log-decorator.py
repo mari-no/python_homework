@@ -13,19 +13,26 @@ def logger_decorator(func):
         
     
         # To write a log record:
-        logger.log(logging.INFO, f"function: {func.__name__}")
 
-        if (args):
-            logger.log(logging.INFO, f"positional parameters: {list(args)}")
-        else:
-            logger.log(logging.INFO, f"positional parameters: none")
+        logger.log(logging.INFO,
+               f"""
+function: {func.__name__} 
+positional parameters: {list(args) if args else "none"}
+keyword parameters: {dict(kwargs) if kwargs else "none"}
+return: {result}""")
+        #logger.log(logging.INFO, f"function: {func.__name__}")
 
-        if(kwargs):
-            logger.log(logging.INFO, f"keyword parameters: {dict(kwargs)}")
-        else:
-            logger.log(logging.INFO, f"keyword parameters: none")
+        # if (args):
+        #     logger.log(logging.INFO, f"positional parameters: {list(args)}")
+        # else:
+        #     logger.log(logging.INFO, f"positional parameters: none")
 
-        logger.log(logging.INFO, f"return: {result}")
+        # if(kwargs):
+        #     logger.log(logging.INFO, f"keyword parameters: {dict(kwargs)}")
+        # else:
+        #     logger.log(logging.INFO, f"keyword parameters: none")
+
+        # logger.log(logging.INFO, f"return: {result}")
 
         return result
 

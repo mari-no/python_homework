@@ -10,3 +10,60 @@ function:keyw_args
 positional parameters: none
 keyword parameters: {'key1': 122, 'key2': 3444, 'key3': 555}
 return: <function logger_decorator at 0x1030bb740>
+function: print_only 
+                   positional parameters: none
+                   keyword parameters: none
+                   return: None
+function: print_only
+function: positional_args 
+                   positional parameters: [12, 3, 778, 99]
+                   keyword parameters: none
+                   return: True
+function: positional_args
+function: keyw_args 
+                   positional parameters: none
+                   keyword parameters: {'key1': 122, 'key2': 3444, 'key3': 555}
+                   return: <function logger_decorator at 0x10099b740>
+function: keyw_args
+function: print_only 
+                   positional parameters: none
+                   keyword parameters: none
+                   return: None
+function: positional_args 
+                   positional parameters: [12, 3, 778, 99]
+                   keyword parameters: none
+                   return: True
+function: keyw_args 
+                   positional parameters: none
+                   keyword parameters: {'key1': 122, 'key2': 3444, 'key3': 555}
+                   return: <function logger_decorator at 0x10164f740>
+
+                   function: print_only 
+                   positional parameters: none
+                   keyword parameters: none
+                   return: None
+
+                   function: positional_args 
+                   positional parameters: [12, 3, 778, 99]
+                   keyword parameters: none
+                   return: True
+
+                   function: keyw_args 
+                   positional parameters: none
+                   keyword parameters: {'key1': 122, 'key2': 3444, 'key3': 555}
+                   return: <function logger_decorator at 0x10449b7e0>
+
+function: print_only 
+positional parameters: none
+keyword parameters: none
+return: None
+
+function: positional_args 
+positional parameters: [12, 3, 778, 99]
+keyword parameters: none
+return: True
+
+function: keyw_args 
+positional parameters: none
+keyword parameters: {'key1': 122, 'key2': 3444, 'key3': 555}
+return: <function logger_decorator at 0x10bcd37e0>

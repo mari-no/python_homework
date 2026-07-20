@@ -72,7 +72,7 @@ class Board:
                 continue
             break
         if (cat) and not win:
-            return (True, "Cat's Game.")
+            return (True, "Cat's Game")
 
         if not win:
             if self.turn == "X": 
@@ -85,15 +85,6 @@ class Board:
             else:
                 return (True, "O has won")
 
-        
-#
-# Implement the game within the mainline code of tictactoe.py. 
-# At the start of the game, an instance of the board class is created,
-#  and then the methods of the board class are used to progress
-#  through the game. Use the input() function to prompt for each move, 
-# indicating whose turn it is. Note that you need to call board.move()
-#  within a try block, with an except block for TictactoeException.
-#  Give appropriate information to the user.
 board_example = Board()
 
 while True:
