@@ -94,6 +94,8 @@ print(clean_data)
 
 # Convert Salary to numeric and replace known 
 # placeholders (unknown, n/a) with NaN
+
+clean_data["Salary"]=clean_data["Salary"].replace(["unknown","n/a","N/A"], pd.NA)
 clean_data["Salary"]=pd.to_numeric(clean_data["Salary"], errors="coerce")
 print(clean_data)
 
@@ -104,7 +106,6 @@ mean_age=clean_data["Age"].mean()
 clean_data["Age"]=clean_data["Age"].fillna(mean_age)
 median_salary=clean_data["Salary"].median()
 
-clean_data["Salary"]=clean_data["Salary"].replace(["unknown","n/a","N/A"], pd.NA)
 clean_data["Salary"]=clean_data["Salary"].fillna(median_salary)
 print(clean_data)
 
@@ -116,7 +117,7 @@ print(clean_data)
 
 # Strip extra whitespace and standardize Name and Department as uppercase
 clean_data["Name"]=clean_data["Name"].str.strip()
-clean_data["Name"]=clean_data["Name"].str.upper()
+
 
 clean_data["Department"]=clean_data["Department"].str.strip()
 clean_data["Department"]=clean_data["Department"].str.upper()
