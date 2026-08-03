@@ -116,7 +116,7 @@ print(clean_data)
 
 
 # Strip extra whitespace and standardize Name and Department as uppercase
-clean_data["Name"]=clean_data["Name"].str.strip().upper()
+clean_data["Name"]=clean_data["Name"].str.strip()
 
 clean_data["Department"]=clean_data["Department"].str.strip().upper()
 
