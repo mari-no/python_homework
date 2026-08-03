@@ -8,6 +8,7 @@ data = {
     'Age': [25, 30, 35],
     'City': ['New York', 'Los Angeles', 'Chicago'],
 }
+#creating dataframe
 task1_data_frame = pd.DataFrame(data)
 
 print("DataFrame for Task1: ", task1_data_frame)
@@ -15,10 +16,11 @@ print("DataFrame for Task1: ", task1_data_frame)
 
 # Make a copy of the dataFrame you created named task1_with_salary 
 task1_with_salary = task1_data_frame.copy()
+#adding Salary column
 task1_with_salary["Salary"] = [70000, 80000, 90000]
 
 print("DF with salary: ", task1_with_salary)
-
+#adding1 year to everyone's age
 task1_older = task1_with_salary.copy()
 task1_older["Age"] += 1
 print("Age modified: ", task1_older)
@@ -94,14 +96,12 @@ print(clean_data)
 
 # Convert Salary to numeric and replace known 
 # placeholders (unknown, n/a) with NaN
-
-clean_data["Salary"]=clean_data["Salary"].replace(["unknown","n/a","N/A"], pd.NA)
 clean_data["Salary"]=pd.to_numeric(clean_data["Salary"], errors="coerce")
 print(clean_data)
 
 # Fill missing numeric values (use fillna). 
 #  Fill Age with the mean and Salary with the median
-
+#filling with mean for age and median for salary
 mean_age=clean_data["Age"].mean()
 clean_data["Age"]=clean_data["Age"].fillna(mean_age)
 median_salary=clean_data["Salary"].median()
@@ -116,9 +116,8 @@ print(clean_data)
 
 
 # Strip extra whitespace and standardize Name and Department as uppercase
-clean_data["Name"]=clean_data["Name"].str.strip()
+clean_data["Name"]=clean_data["Name"].str.strip().upper()
 
+clean_data["Department"]=clean_data["Department"].str.strip().upper()
 
-clean_data["Department"]=clean_data["Department"].str.strip()
-clean_data["Department"]=clean_data["Department"].str.upper()
 
