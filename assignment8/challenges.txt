@@ -1,0 +1,6 @@
+Challenge I faced:The link provided for Task 6
+ did not contain the necessary data. 
+ Based on the task description, 
+ I chose the link https://owasp.org/Top10/2025/ instead. 
+ It had the required data to complete the task and 
+was the most recent version available.
