@@ -30,3 +30,6 @@ with sqlite3.connect("../db/lesson.db") as conn:
     print("Sorted DataFrame: ", df)
     # Write to CSV 
     df.to_csv("order_summary.csv")
+
+    #Print first 10 rows to check sorting
+    print(df.head(10))
