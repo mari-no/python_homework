@@ -9,6 +9,9 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 
 ###### Task 1
+
+#The search page used in this assignment is not under /staff/,
+#so the planned scraping does not violate this restriction.
 robots_URL = 'https://durhamcountylibrary.org/robots.txt'
 try:
     driver.get(robots_URL)
