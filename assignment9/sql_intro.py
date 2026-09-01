@@ -224,7 +224,7 @@ query_two = cursor.fetchall()
 print(query_two)
 
 # a query to find magazines for a particular publisher
-cursor.execute("""SELECT magazines.* FROM magazines 
+cursor.execute("""SELECT magazines.* , publishers.name FROM magazines 
                 JOIN publishers 
                 ON magazines.publisher_id = publishers.publisher_id
                 WHERE publishers.name = 'Fedor Dostoevskij';""")
