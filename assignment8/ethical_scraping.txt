@@ -1,0 +1,66 @@
+Which sections of the website are restricted for crawling?
+
+There are several sections restricted such as :
+Disallow: /w/
+Disallow: /api/
+Disallow: /trap/
+Disallow: /wiki/Special:
+Disallow: /wiki/Spezial:
+Disallow: /wiki/Spesial:
+Disallow: /wiki/Special%3A
+Disallow: /wiki/Spezial%3A
+Disallow: /wiki/Spesial%3A
+#
+# ar:
+Disallow: /wiki/%D8%AE%D8%A7%D8%B5:Search
+Disallow: /wiki/%D8%AE%D8%A7%D8%B5%3ASearch
+#
+# dewiki:
+# T6937
+# sensible deletion and meta user discussion pages:
+Disallow: /wiki/Wikipedia:L%C3%B6schkandidaten/
+Disallow: /wiki/Wikipedia:Löschkandidaten/
+Disallow: /wiki/Wikipedia:Vandalensperrung/
+Disallow: /wiki/Wikipedia:Benutzersperrung/
+Disallow: /wiki/Wikipedia:Vermittlungsausschuss/
+and others
+
+
+
+
+
+Are there specific rules for certain user agents?
+Yes, access is restricted for several agents such as :
+Mediapartners-Google*
+UbiCrawler
+DOC
+Zao
+Zealbot
+MSIECrawler
+SiteSnagger
+WebStripper
+WebCopier
+Fetch
+Offline Explorer
+Teleport
+TeleportPro
+WebZIP
+HTTrack
+
+
+Reflect on why websites use robots.txt and write 2-3 sentences explaining its purpose and how it promotes ethical scraping.
+
+
+It is a foundation for how web crawlers and scrapers interact
+ with websites. It guides you through the ethical intricacies
+  of automated data extraction and specifies your responsibilities.
+It’s not a security measure per se, but a guideline that helps keep web
+ scraping activities compliant and respectful.
+
+
+
+
+
+
+
+
