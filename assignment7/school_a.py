@@ -6,6 +6,9 @@ with  sqlite3.connect("../db/school.db") as conn:  # Create the file here, so th
 
 # The "with" statement commits successful transactions and rolls back transactions which cause exceptions within the block.  You must close the connection explicitly with conn.close().
 
+
+# Connect to the database
+
 import sqlite3
 
 # Connect to the database
