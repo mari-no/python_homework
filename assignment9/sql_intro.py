@@ -139,98 +139,101 @@ def add_subscriber(cursor, subscriber_name, subscriber_address):
 
 
 def add_subscription(cursor, subscriber_name, subscriber_address, magazine_name, expiration_date): 
-
+    try:
 # Find subscriber 
-    cursor.execute( "SELECT * FROM subscribers WHERE subscriber_name = ? AND subscriber_address = ?",
-    
-    (subscriber_name, subscriber_address) 
-                    )
+        cursor.execute( "SELECT * FROM subscribers WHERE subscriber_name = ? AND subscriber_address = ?",
         
-    result = cursor.fetchone()
+        (subscriber_name, subscriber_address) 
+                        )
+            
+        result = cursor.fetchone()
 
-    if result:
-        subscriber_id = result[0]
-    else:
-        print(
-        f"There was no subscriber named {subscriber_name} "
-        f"at {subscriber_address}."
-    )
-        return
-# Find magazine 
-    cursor.execute( "SELECT * FROM magazines WHERE magazine_name = ?",
-                    (magazine_name,) )
-    results = cursor.fetchall() 
-    if len(results) > 0:
-        magazine_id = results[0][0]
-    else: 
-        print(f"There was no magazine named {magazine_name}.") 
-        return 
-# Check if this subscription already exists 
-    cursor.execute( """ SELECT * FROM subscriptions WHERE subscriber_id = ? AND magazine_id = ? """, 
-                    (subscriber_id, magazine_id) ) 
-    results = cursor.fetchall() 
-    if len(results) > 0:
-        print( f"{subscriber_name} is already subscribed to {magazine_name}." )
-        return
-# Create subscription 
-    cursor.execute( """ INSERT INTO subscriptions (subscriber_id, magazine_id, expiration_date) VALUES (?, ?, ?) """,
-                    (subscriber_id, magazine_id, expiration_date) )
-
+        if result:
+            subscriber_id = result[0]
+        else:
+            print(
+            f"There was no subscriber named {subscriber_name} "
+            f"at {subscriber_address}."
+        )
+            return
+    # Find magazine 
+        cursor.execute( "SELECT * FROM magazines WHERE magazine_name = ?",
+                        (magazine_name,) )
+        results = cursor.fetchall() 
+        if len(results) > 0:
+            magazine_id = results[0][0]
+        else: 
+            print(f"There was no magazine named {magazine_name}.") 
+            return 
+    # Check if this subscription already exists 
+        cursor.execute( """ SELECT * FROM subscriptions WHERE subscriber_id = ? AND magazine_id = ? """, 
+                        (subscriber_id, magazine_id) ) 
+        results = cursor.fetchall() 
+        if len(results) > 0:
+            print( f"{subscriber_name} is already subscribed to {magazine_name}." )
+            return
+    # Create subscription 
+        cursor.execute( """ INSERT INTO subscriptions (subscriber_id, magazine_id, expiration_date) VALUES (?, ?, ?) """,
+                        (subscriber_id, magazine_id, expiration_date) )
+    except sqlite3.Error as error:
+        print(f"An unexpected error occurred: {error}")
 conn.execute("PRAGMA foreign_keys = 1")
+try: 
+    ###filling Publisher table with data
+    add_publisher(cursor, "Lee Cooper"),
+    add_publisher(cursor, "Mary Styr"),
+    add_publisher(cursor, "Leo Tolstoj"),
+    add_publisher(cursor, "Fedor Dostoevskij"),
 
-###filling Publisher table with data
-add_publisher(cursor, "Lee Cooper"),
-add_publisher(cursor, "Mary Styr"),
-add_publisher(cursor, "Leo Tolstoj"),
-add_publisher(cursor, "Fedor Dostoevskij"),
+    ## filling Magazines data
 
-## filling Magazines data
-
-add_magazine(cursor, "World", "Lee Cooper")
-add_magazine(cursor, "Sun","Mary Styr")
-add_magazine(cursor, "Rain", "Lee Cooper")
-add_magazine(cursor, "Rainbow", "Lee Cooper")
-add_magazine(cursor, "Terrace", "Fedor Dostoevskij")
-add_magazine(cursor, "Times", "Leo Tolstoj")
+    add_magazine(cursor, "World", "Lee Cooper")
+    add_magazine(cursor, "Sun","Mary Styr")
+    add_magazine(cursor, "Rain", "Lee Cooper")
+    add_magazine(cursor, "Rainbow", "Lee Cooper")
+    add_magazine(cursor, "Terrace", "Fedor Dostoevskij")
+    add_magazine(cursor, "Times", "Leo Tolstoj")
 
 
-## filling Subscribers data
+    ## filling Subscribers data
 
-add_subscriber(cursor, "Jihn Doe", "123 Kyla str")
-add_subscriber(cursor, "John Smith", "123 Main str")
-add_subscriber(cursor, "Mary Monro", "23 Byron str")
-add_subscriber(cursor, "Ken Smith", "23 Astee str")
+    add_subscriber(cursor, "Jihn Doe", "123 Kyla str")
+    add_subscriber(cursor, "John Smith", "123 Main str")
+    add_subscriber(cursor, "Mary Monro", "23 Byron str")
+    add_subscriber(cursor, "Ken Smith", "23 Astee str")
 
-##filling Subscriptions data
-add_subscription(cursor, "Jihn Doe", "123 Kyla str", "World", "02/08/2027")
-add_subscription(cursor, "Jihn Doe", "123 Kyla str", "Sun", "07/10/2027")
-add_subscription(cursor, "Jihn Doe",  "123 Kyla str", "Rainbow", "12/18/2027")
-add_subscription(cursor, "John Smith","123 Main str", "World", "09/08/2027")
-add_subscription(cursor, "Mary Monro", "23 Byron str", "Terrace", "11/01/2028")
-add_subscription(cursor, "Mary Monro", "23 Byron str", "Times", "11/11/2028")
-add_subscription(cursor, "Ken Smith", "23 Astee str", "Rain", "12/11/2027")
-
+    ##filling Subscriptions data
+    add_subscription(cursor, "Jihn Doe", "123 Kyla str", "World", "02/08/2027")
+    add_subscription(cursor, "Jihn Doe", "123 Kyla str", "Sun", "07/10/2027")
+    add_subscription(cursor, "Jihn Doe",  "123 Kyla str", "Rainbow", "12/18/2027")
+    add_subscription(cursor, "John Smith","123 Main str", "World", "09/08/2027")
+    add_subscription(cursor, "Mary Monro", "23 Byron str", "Terrace", "11/01/2028")
+    add_subscription(cursor, "Mary Monro", "23 Byron str", "Times", "11/11/2028")
+    add_subscription(cursor, "Ken Smith", "23 Astee str", "Rain", "12/11/2027")
+except sqlite3.Error as error:
+    print(f"An unexpected error occurred: {error}")
 conn.commit()
 
 ## Task 4: Write SQL Queries
 # a query to retrieve all information from the subscribers table.
+try:
+    cursor.execute("SELECT * FROM subscribers;")
+    query_one = cursor.fetchall()
+    print(query_one)
+    # a query to retrieve all magazines sorted by name.
+    cursor.execute("SELECT * FROM magazines ORDER BY magazine_name;")
+    query_two = cursor.fetchall()
+    print(query_two)
 
-cursor.execute("SELECT * FROM subscribers;")
-query_one = cursor.fetchall()
-print(query_one)
-# a query to retrieve all magazines sorted by name.
-cursor.execute("SELECT * FROM magazines ORDER BY magazine_name;")
-query_two = cursor.fetchall()
-print(query_two)
-
-# a query to find magazines for a particular publisher
-cursor.execute("""SELECT magazines.* , publishers.name FROM magazines 
-                JOIN publishers 
-                ON magazines.publisher_id = publishers.publisher_id
-                WHERE publishers.name = 'Fedor Dostoevskij';""")
-query_three = cursor.fetchall()
-print(query_three)
-
+    # a query to find magazines for a particular publisher
+    cursor.execute("""SELECT magazines.* , publishers.name FROM magazines 
+                    JOIN publishers 
+                    ON magazines.publisher_id = publishers.publisher_id
+                    WHERE publishers.name = 'Fedor Dostoevskij';""")
+    query_three = cursor.fetchall()
+    print(query_three)
+except sqlite3.Error as error:
+    print(f"An unexpected error occurred: {error}")
 
 conn.close()
 
