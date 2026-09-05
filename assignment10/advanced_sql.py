@@ -52,7 +52,7 @@ try:
     JOIN products AS p ON p.product_id = l.product_id
     GROUP BY o.order_id) AS order_totals
     ON cus.customer_id = order_totals.customer_id_b
-    GROUP BY customers.customer_id
+    GROUP BY cus.customer_id
 
     """
     cursor.execute(query)
@@ -76,13 +76,14 @@ try:
     conn = sqlite3.connect("../db/lesson.db")
     cursor = conn.cursor()
     conn.execute("PRAGMA foreign_keys = 1")
+    conn.execute("BEGIN")
     cursor.execute(  """
                 SELECT customer_id FROM customers WHERE
                 customer_name LIKE 'Perez and Sons' """)
     customer_id = cursor.fetchone()[0]
     cursor.execute("""
                 SELECT product_id FROM products 
-                ORDER BY price
+                ORDER BY price, product_id
                 LIMIT 5
             """)
     product_ids = cursor.fetchall()
