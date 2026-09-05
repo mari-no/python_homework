@@ -44,14 +44,14 @@ try:
 
     SELECT customer_name, AVG(total_price) AS average_total_price
      
-    FROM customers
+    FROM customers AS cus
     LEFT JOIN (SELECT o.customer_id AS customer_id_b, 
     SUM(p.price* l.quantity) AS total_price
     FROM orders AS o 
     JOIN line_items AS l ON o.order_id = l.order_id
     JOIN products AS p ON p.product_id = l.product_id
-    GROUP BY o.order_id) 
-    ON customer_id = customer_id_b
+    GROUP BY o.order_id) AS order_totals
+    ON cus.customer_id = order_totals.customer_id_b
     GROUP BY customers.customer_id
 
     """
@@ -94,7 +94,7 @@ try:
     cursor.execute("""INSERT INTO orders (customer_id, employee_id , date) 
                    VALUES (?, ?, ?)
                    RETURNING order_id""",
-                   (customer_id, employee_id , '08/06/2026'))
+                   (customer_id, employee_id , '2026-08-06'))
     order_id = cursor.fetchone()[0]
 
 
@@ -129,16 +129,6 @@ except Exception as e:
 
 ## Task 4: Aggregation with HAVING
 # Find all employees associated with more than 5 orders. 
-#  You want the first_name, the last_name, and the count of orders. 
-#  You need to do a JOIN on the employees and orders tables,
-#  and then use GROUP BY, COUNT, and HAVING.
-# Deliverable:
-# Get it working in sqlcommand.
-# Add code advanced_sql.py to print 
-# out the employee_id, first_name, last_name, a
-# nd an order count for each of the employees with more than 5 orders.
-# Test your program.
-
 
 try:
     #Connect to DB
@@ -147,7 +137,7 @@ try:
     query_empl = ( """
                 SELECT e.employee_id,
                 e.first_name, e.last_name, 
-                COUNT(o.order_id) 
+                COUNT(o.order_id) AS order_count
                 FROM employees AS e 
                 JOIN orders AS o
                 ON e.employee_id = o.employee_id
