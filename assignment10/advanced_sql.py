@@ -71,61 +71,90 @@ except sqlite3.Error as error:
 #  The customer wants 10 of each of the 5 least expensive 
 # products. 
 # 
+conn = None
 try:
     #Connect to DB
     conn = sqlite3.connect("../db/lesson.db")
     cursor = conn.cursor()
     conn.execute("PRAGMA foreign_keys = 1")
     conn.execute("BEGIN")
-    cursor.execute(  """
-                SELECT customer_id FROM customers WHERE
-                customer_name LIKE 'Perez and Sons' """)
-    customer_id = cursor.fetchone()[0]
-    cursor.execute("""
-                SELECT product_id FROM products 
-                ORDER BY price, product_id
-                LIMIT 5
-            """)
-    product_ids = cursor.fetchall()
-    cursor.execute("""
-                SELECT employee_id FROM employees WHERE
-                first_name LIKE 'Miranda' 
-                AND last_name LIKE 'Harris'""")
-    employee_id = cursor.fetchone()[0]
-    cursor.execute("""INSERT INTO orders (customer_id, employee_id , date) 
-                   VALUES (?, ?, ?)
-                   RETURNING order_id""",
-                   (customer_id, employee_id , '2026-08-06'))
-    order_id = cursor.fetchone()[0]
+
+    cursor.execute( """ SELECT o.order_id FROM orders AS o 
+                   JOIN customers AS c
+                   ON o.customer_id = c.customer_id
+                   JOIN employees AS e 
+                   ON o.employee_id = e.employee_id 
+                   JOIN line_items AS l 
+                   ON o.order_id = l.order_id 
+                   WHERE c.customer_name LIKE 'Perez and Sons'
+                   AND  e.first_name LIKE 'Miranda' 
+                   AND e.last_name LIKE 'Harris'
+                   AND o.date = '2026-08-06'
+                   GROUP BY o.order_id 
+                   HAVING COUNT(*) =5 """)
+
+    existing_order = cursor.fetchone()
+
+    if existing_order:
+        print(f'Order already exists: {existing_order[0]}')
+        conn.rollback()
+    else:
+        cursor.execute(  """
+                    SELECT customer_id FROM customers WHERE
+                    customer_name LIKE 'Perez and Sons' """)
+        customer_id = cursor.fetchone()[0]
+        cursor.execute("""
+                    SELECT product_id FROM products 
+                    ORDER BY price, product_id
+                    LIMIT 5
+                """)
+        product_ids = cursor.fetchall()
+        cursor.execute("""
+                    SELECT employee_id FROM employees WHERE
+                    first_name LIKE 'Miranda' 
+                    AND last_name LIKE 'Harris'""")
+        employee_id = cursor.fetchone()[0]
+        cursor.execute("""INSERT INTO orders (customer_id, employee_id , date) 
+                        VALUES (?, ?, ?)
+                        RETURNING order_id""",
+                        (customer_id, employee_id , '2026-08-06'))
+        order_id = cursor.fetchone()[0]
 
 
-    for product in product_ids:
+        for product in product_ids:
 
-        cursor.execute(  "INSERT INTO line_items(order_id, product_id, quantity) VALUES (?, ?, ?)",
-                   (order_id, product[0], 10)
-                   )
-    conn.commit()  # Commit transaction
+            cursor.execute(  "INSERT INTO line_items(order_id, product_id, quantity) VALUES (?, ?, ?)",
+                        (order_id, product[0], 10)
+                        )
+        conn.commit()  # Commit transaction
 
-    query = ("""SELECT o.order_id, l.line_item_id,  l.quantity, p.product_name
-    FROM orders AS o 
-    JOIN line_items AS l 
-    ON o.order_id = l.order_id
-    JOIN products AS p
-    ON l.product_id = p.product_id
-     WHERE o.order_id = ? """)
-    cursor.execute(query, (order_id,))
-    print(f"Here is all the info we added for order {order_id}: {cursor.fetchall()}")
+        query = ("""SELECT o.order_id, l.line_item_id,  l.quantity, p.product_name
+        FROM orders AS o 
+        JOIN line_items AS l 
+        ON o.order_id = l.order_id
+        JOIN products AS p
+        ON l.product_id = p.product_id
+            WHERE o.order_id = ? """)
+        cursor.execute(query, (order_id,))
+        print(f"Here is all the info we added for order {order_id}: {cursor.fetchall()}")
+
     
-    
-    conn.close()
+   
 # print out the list of line_item_ids for the order
 #  along with the quantity and product name for each.
 
+except sqlite3.Error as error:
+    print(f"An error occurred: {error}")
 
+    if conn is not None:
+        conn.rollback()
 except Exception as e:
-    conn.rollback()  # Rollback transaction if there's an error
+    if conn is not None:
+        conn.rollback()  # Rollback transaction if there's an error
     print("Error:", e)
-
+finally:
+    if conn is not None:
+        conn.close()
 
 
 ## Task 4: Aggregation with HAVING
